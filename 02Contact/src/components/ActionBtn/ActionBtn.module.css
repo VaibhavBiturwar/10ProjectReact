@@ -1,0 +1,21 @@
+.btnCtr {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 0 20px;
+    min-width: 200px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.outline {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}

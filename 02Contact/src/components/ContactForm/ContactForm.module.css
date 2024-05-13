@@ -1,0 +1,59 @@
+.contactCtr {
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+}
+
+.btnRow {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+
+
+.inputCtr {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.inputCtr label {
+    position: absolute;
+    background-color: #fff;
+    top: -10px;
+    left: 10px;
+    padding: 0px 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.inputCtr input {
+    padding: 10px 10px;
+}
+
+.dataCtr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.formCtr {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.submitCtr {
+    display: flex;
+    justify-content: end;
+}
+
+.graphicCtr {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+
+}

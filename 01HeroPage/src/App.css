@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root{
+  --color-red:#D01C28;
+  --grey:#5A5959;
+    --white: #ffffff;
+}
+
+body{
+  font-family: "Roboto", sans-serif; 
+
+}
+
+.navBar{
+  display: flex;
+  justify-content: space-between;
+  max-width: 1440px;
+  align-items: center;
+  margin: 0 auto;
+  height: 72px;
+}
+
+.navItems{
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+.navItemText{
+  size: 16px;
+  font-weight: 500;
+}
+
+.actionBtn {
+  all:unset;
+  background-color: var(--color-red);
+  color:white;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.heroCtr{
+  display: flex;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: calc(100vh - 100px);
+  align-items: center;
+}
+
+.heroContent{
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.heroContent h1{
+  font-size: 108px;
+  font-weight: 900;
+  line-height: 102px;
+  margin: 0px;
+}
+.heroContent p{
+  font-size: 16px;
+  font-weight: 600;
+  max-width: 404px;
+  margin: 0px;
+}
+
+
+.shopCtr{
+  display: flex;
+  gap:24px;
+}
+
+.actionBtnSecondary{
+  all: unset;
+    background-color:  transparent;
+    color: var(--grey);
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid var(--grey);
+}
+
+.marketPlace{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}

@@ -1,0 +1,15 @@
+.sectionCtr {
+    background-color: #fff;
+}
+
+.sectionCtr h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+.sectionCtr p {
+    font-size: 16px;
+    font-weight: 500;
+    color: grey;
+    max-width: 80%;
+}

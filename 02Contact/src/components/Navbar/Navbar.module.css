@@ -1,0 +1,28 @@
+.navContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 72px;
+
+}
+
+.navList {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    gap: 20px;
+}
+
+.navList li {
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    align-content: center;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+.active {
+    background-color: grey;
+    color: white;
+}
