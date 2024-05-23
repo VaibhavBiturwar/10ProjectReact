@@ -16,10 +16,11 @@ import {
 import { PasswordField } from "../../components/PasswordField";
 import { Formik, Form, Field } from "formik";
 import { object, string } from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { loginQuery } from "../../config/userQueries";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setIsLoggedIn, setUserData } from "../../store/slice/authSlice";
 
 const signupValidationSchema = object({
   email: string()
@@ -31,7 +32,8 @@ const signupValidationSchema = object({
 });
 
 export default function SignIn() {
-  const { value } = useSelector((s) => s.auth);
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
   const toast = useToast();
   const { mutate, isLoading } = useMutation({
     mutationKey: ["login"],
@@ -45,11 +47,25 @@ export default function SignIn() {
         position: "top-left",
       });
     },
+    onSuccess: (data) => {
+      if (data.success) {
+        dispatch(setUserData(data.data));
+        dispatch(setIsLoggedIn(true));
+        // navigation("/");
+      } else {
+        toast({
+          description: data.message,
+          title: "An error occurred!",
+          status: "error",
+          colorScheme: "brand",
+          position: "top-left",
+        });
+      }
+    },
   });
 
   return (
     <Container h="100vh" minW="300px">
-      <Text>{value}</Text>
       <Center h="100%">
         <Card
           w="100%"

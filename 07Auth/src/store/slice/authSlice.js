@@ -1,24 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 0,
+  isLoggedIn: false,
+  userData: null,
+  authToken: null,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
     },
-    decrement: (state) => {
-      state.value -= 1;
+    setUserData: (state, { payload }) => {
+      state.authToken = payload.accessToken;
+      delete payload.accessToken;
+      delete payload.refreshToken;
+      state.userData = payload;
     },
-    incrementBy: (state, action) => {
-      state.value += action.payload;
+    setLogoutUser: (state) => {
+      state.userData = null;
+      state.authToken = null;
+      state.isLoggedIn = false;
     },
   },
 });
 
-export const { increment, decrement, incrementBy } = authSlice.actions;
+export const { setIsLoggedIn, setUserData, setLogoutUser } = authSlice.actions;
 export default authSlice.reducer;

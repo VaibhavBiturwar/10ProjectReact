@@ -1,34 +1,27 @@
-import { Button, Card, Center, Container, Input, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  increment,
-  decrement,
-  incrementBy,
-} from "../../store/slice/authSlice.js";
+import { Button, Card, Container, Text } from "@chakra-ui/react";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { setLogoutUser } from "../../store/slice/authSlice";
 
 export const Dashboard = () => {
-  const [inputValue, setInputValue] = useState(0);
-  const { value } = useSelector((s) => s.auth);
   const dispatch = useDispatch();
+  const onLogoutUser = () => {
+    dispatch(setLogoutUser());
+  };
 
   return (
-    <Container>
-      <Center>
-        <Card>
-          <Text>Dashboard</Text>
-          <Text> {value} </Text>
-          <Button onClick={() => dispatch(increment())}>INC</Button>
-          <Button onClick={() => dispatch(decrement())}>DEC</Button>
-          <Input
-            type="number"
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <Button onClick={() => dispatch(incrementBy(Number(inputValue)))}>
-            Add
-          </Button>
-        </Card>
-      </Center>
+    <Container
+      h={"100vh"}
+      display="flex"
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <Card p={10}>
+        <Text>Dashboard</Text>
+        <Button onClick={onLogoutUser} colorScheme="brand">
+          Logout
+        </Button>
+      </Card>
     </Container>
   );
 };

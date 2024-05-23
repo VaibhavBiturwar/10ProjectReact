@@ -19,33 +19,59 @@ import {
   Dashboard,
 } from "./pages";
 import { Provider } from "react-redux";
-import { store } from "./store/store.js";
+import { store, persistor } from "./store/store.js";
+import { PersistGate } from "redux-persist/integration/react";
+import { PrivateRoute, PublicRoute } from "./components";
 
 const router = createBrowserRouter([
   // Auth
   {
     path: "/signin",
-    element: <Signin />,
+    element: (
+      <PublicRoute>
+        <Signin />
+      </PublicRoute>
+    ),
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: (
+      <PublicRoute>
+        <Signup />
+      </PublicRoute>
+    ),
   },
   {
     path: "/forgotPassword",
-    element: <ForgotPassword />,
+    element: (
+      <PublicRoute>
+        <ForgotPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: "/verifyEmail",
-    element: <VerifyEmail />,
+    element: (
+      <PublicRoute>
+        <VerifyEmail />
+      </PublicRoute>
+    ),
   },
   {
     path: "/verifySuccess",
-    element: <VerifySuccess />,
+    element: (
+      <PublicRoute>
+        <VerifySuccess />
+      </PublicRoute>
+    ),
   },
   {
     path: "/resetSent",
-    element: <ResetSent />,
+    element: (
+      <PublicRoute>
+        <ResetSent />
+      </PublicRoute>
+    ),
   },
   {
     path: "/resetPassword",
@@ -58,7 +84,11 @@ const router = createBrowserRouter([
   // Dashboard
   {
     path: "/",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
   },
 ]);
 const queryClient = new QueryClient();
@@ -68,7 +98,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <PersistGate loading={null} persistor={persistor}>
+            <RouterProvider router={router} />
+          </PersistGate>
           <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
       </ChakraProvider>
