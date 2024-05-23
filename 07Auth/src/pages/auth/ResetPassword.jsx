@@ -12,7 +12,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { object, ref, string } from "yup";
-import { PasswordField } from "../components/PasswordField";
+import { PasswordField } from "../../components/PasswordField";
 
 const emailSchema = object({
   password: string()

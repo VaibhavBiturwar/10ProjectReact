@@ -11,11 +11,15 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { PasswordField } from "../components/PasswordField";
+import { PasswordField } from "../../components/PasswordField";
 import { Formik, Form, Field } from "formik";
 import { object, string } from "yup";
 import { Link } from "react-router-dom";
+import { useMutation } from "react-query";
+import { loginQuery } from "../../config/userQueries";
+import { useSelector } from "react-redux";
 
 const signupValidationSchema = object({
   email: string()
@@ -27,8 +31,25 @@ const signupValidationSchema = object({
 });
 
 export default function SignIn() {
+  const { value } = useSelector((s) => s.auth);
+  const toast = useToast();
+  const { mutate, isLoading } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: loginQuery,
+    onError: (e) => {
+      toast({
+        description: e,
+        title: "An error occurred!",
+        status: "error",
+        colorScheme: "brand",
+        position: "top-left",
+      });
+    },
+  });
+
   return (
     <Container h="100vh" minW="300px">
+      <Text>{value}</Text>
       <Center h="100%">
         <Card
           w="100%"
@@ -57,7 +78,7 @@ export default function SignIn() {
             }}
             validationSchema={signupValidationSchema}
             onSubmit={(values) => {
-              console.log(values);
+              mutate({ email: values.email, password: values.password });
             }}
           >
             {() => (
@@ -119,7 +140,11 @@ export default function SignIn() {
                       </Link>
                     </Flex>
 
-                    <Button colorScheme="brand" type="submit">
+                    <Button
+                      isLoading={isLoading}
+                      colorScheme="brand"
+                      type="submit"
+                    >
                       Login
                     </Button>
                     <Link to="/signup">

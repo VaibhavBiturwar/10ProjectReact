@@ -3,19 +3,28 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Signup from "./pages/Signup.jsx";
-import Signin from "./pages/Signin.jsx";
 import { theme } from "./theme/theme.js";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
-import VerifyEmail from "./pages/VerifyEmail.jsx";
-import VerifySuccess from "./pages/VerifySuccess.jsx";
-import ResetSent from "./pages/ResetSent.jsx";
-import ResetPassword from "./pages/ResetPassword.jsx";
-import ResetSuccess from "./pages/ResetSuccess.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+import {
+  Signin,
+  Signup,
+  ForgotPassword,
+  ResetPassword,
+  ResetSent,
+  ResetSuccess,
+  VerifyEmail,
+  VerifySuccess,
+  Dashboard,
+} from "./pages";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js";
 
 const router = createBrowserRouter([
+  // Auth
   {
-    path: "/",
+    path: "/signin",
     element: <Signin />,
   },
   {
@@ -46,12 +55,23 @@ const router = createBrowserRouter([
     path: "/resetSuccess",
     element: <ResetSuccess />,
   },
+  // Dashboard
+  {
+    path: "/",
+    element: <Dashboard />,
+  },
 ]);
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={true} />
+        </QueryClientProvider>
+      </ChakraProvider>
+    </Provider>
   </React.StrictMode>
 );

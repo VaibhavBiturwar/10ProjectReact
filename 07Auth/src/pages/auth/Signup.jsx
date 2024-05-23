@@ -12,8 +12,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { PasswordField } from "../components/PasswordField";
-import { Link } from "react-router-dom";
+import { PasswordField } from "../../components/PasswordField";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { object, string, ref } from "yup";
 
@@ -32,6 +32,8 @@ const signupValidationSchema = object({
 });
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   return (
     <Container h="100vh" minW="300px">
       <Center h="100%">
@@ -66,6 +68,9 @@ export default function SignUp() {
             validationSchema={signupValidationSchema}
             onSubmit={(values) => {
               console.log(values);
+              navigate("/verifyEmail", {
+                state: { email: values.email },
+              });
             }}
           >
             {() => (
