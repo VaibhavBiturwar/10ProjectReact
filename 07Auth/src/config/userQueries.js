@@ -11,3 +11,23 @@ export const loginQuery = async ({ email, password }) => {
     throw error.response.data.message;
   }
 };
+
+export const videoListQuery = async () => {
+  try {
+    const { data } = await api.get(endpoints.allVideos);
+    return data;
+  } catch (error) {
+    console.log("🚀 / videoListQuery / error:", error);
+    throw error.response.data.message;
+  }
+};
+
+export const tweetListQuery = async () => {
+  try {
+    const { data } = await api.get(endpoints.allTweets);
+    return data;
+  } catch (error) {
+    console.log("🚀 / tweetListQuery / error:", error);
+    throw error.response.data.message;
+  }
+};

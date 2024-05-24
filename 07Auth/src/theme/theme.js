@@ -4,7 +4,7 @@ export const theme = extendTheme(
   {
     colors: {
       brand: {
-        50: "#D4C0ED",
+        50: "#e7e1ef",
         100: "#BB9AE5",
         200: "#A576E1",
         300: "#9352E4",
@@ -23,6 +23,14 @@ export const theme = extendTheme(
         800: "#171717",
         900: "#171717",
       },
+      red: {
+        200: "#f26d6d",
+        500: "#f33636",
+        600: "#f41717",
+        700: "#e80202",
+        800: "#c10202",
+        900: "#920101",
+      },
     },
 
     textStyles: {
@@ -35,6 +43,11 @@ export const theme = extendTheme(
         fontSize: 28,
         fontWeight: "medium",
         color: "black.900",
+      },
+      body: {
+        fontSize: 16,
+        fontWeight: "medium",
+        color: "black.700",
       },
       mutedText: {
         fontSize: 14,

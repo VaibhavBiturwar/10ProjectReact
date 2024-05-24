@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { theme } from "./theme/theme.js";
@@ -17,6 +16,8 @@ import {
   VerifyEmail,
   VerifySuccess,
   Dashboard,
+  VideosHome,
+  TweetsHome,
 } from "./pages";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store.js";
@@ -87,6 +88,22 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Dashboard />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/videosHome",
+    element: (
+      <PrivateRoute>
+        <VideosHome />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/tweetsHome",
+    element: (
+      <PrivateRoute>
+        <TweetsHome />
       </PrivateRoute>
     ),
   },
