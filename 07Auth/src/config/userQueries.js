@@ -31,3 +31,15 @@ export const tweetListQuery = async () => {
     throw error.response.data.message;
   }
 };
+
+export const likeTweetQuery = async (tweetId) => {
+  try {
+    const { data } = await api.post(endpoints.likeTweet, {
+      tweetId,
+    });
+    return data;
+  } catch (error) {
+    console.log("🚀 / tweetListQuery / error:", error);
+    throw error.response.data.message;
+  }
+};

@@ -25,4 +25,5 @@ export const endpoints = {
   allVideos: "videos/getAllVideos",
   //
   allTweets: "tweets/getAllTweets",
+  likeTweet: "likes/toggleTweetLike",
 };
