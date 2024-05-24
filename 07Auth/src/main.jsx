@@ -18,6 +18,7 @@ import {
   Dashboard,
   VideosHome,
   TweetsHome,
+  ProfileHome,
 } from "./pages";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store.js";
@@ -104,6 +105,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <TweetsHome />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profileHome",
+    element: (
+      <PrivateRoute>
+        <ProfileHome />
       </PrivateRoute>
     ),
   },

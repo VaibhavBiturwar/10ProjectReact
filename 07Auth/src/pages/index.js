@@ -9,6 +9,7 @@ import VerifySuccess from "./auth/VerifySuccess.jsx";
 import { Dashboard } from "./home/Dashboard.jsx";
 import { TweetsHome } from "./home/TweetsHome.jsx";
 import { VideosHome } from "./home/VideosHome.jsx";
+import { ProfileHome } from "./profile/ProfileHome.jsx";
 
 export {
   ForgotPassword,
@@ -23,4 +24,6 @@ export {
   Dashboard,
   VideosHome,
   TweetsHome,
+  //
+  ProfileHome,
 };

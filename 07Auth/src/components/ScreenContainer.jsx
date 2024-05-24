@@ -1,6 +1,17 @@
 import React from "react";
-import { Box, Flex, Text, HStack, Button, Tag } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import {
+  Box,
+  Flex,
+  Text,
+  HStack,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Image,
+} from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogoutUser } from "../store/slice/authSlice";
 import { Link, useLocation } from "react-router-dom";
 
@@ -33,10 +44,6 @@ const PAGES = [
 
 const TopHeader = () => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const onLogoutUser = () => {
-    dispatch(setLogoutUser());
-  };
   return (
     <Box bg={"white"} boxShadow={"md"}>
       <Flex
@@ -45,10 +52,10 @@ const TopHeader = () => {
         py={5}
         alignItems={"center"}
       >
-        <Text textStyle={"title"}>Dashboard</Text>
+        <Text textStyle={"title"}>SocialClub</Text>
         <HStack>
-          {PAGES.map(({ path, title }) => (
-            <Link to={path}>
+          {PAGES.map(({ path, title, id }) => (
+            <Link key={id} to={path}>
               <Button
                 size={"sm"}
                 colorScheme="purple"
@@ -59,17 +66,41 @@ const TopHeader = () => {
               </Button>
             </Link>
           ))}
-
-          <Button
-            size={"sm"}
-            onClick={onLogoutUser}
-            variant={"outline"}
-            colorScheme="red"
-          >
-            Logout
-          </Button>
+          <ProfileIcon />
         </HStack>
       </Flex>
     </Box>
+  );
+};
+
+const ProfileIcon = () => {
+  const { userData } = useSelector((s) => s.auth);
+  const dispatch = useDispatch();
+  const onLogoutUser = () => {
+    dispatch(setLogoutUser());
+  };
+
+  return (
+    <Menu>
+      <MenuButton>
+        <Image
+          src={userData.avatarUrl}
+          height={10}
+          width={10}
+          borderRadius={"full"}
+          objectFit={"cover"}
+        />
+      </MenuButton>
+      <MenuList>
+        <MenuItem as={Link} to={"/profileHome"}>
+          Profile
+        </MenuItem>
+        <MenuItem>Settings</MenuItem>
+        <MenuItem>Help</MenuItem>
+        <MenuItem color={"red.500"} onClick={onLogoutUser}>
+          Logout
+        </MenuItem>
+      </MenuList>
+    </Menu>
   );
 };
