@@ -13,7 +13,6 @@ import { Loader, ScreenContainer, ScreenTitle } from "../../components";
 import { useMutation, useQuery } from "react-query";
 import { tweetListQuery, likeTweetQuery } from "../../config/userQueries";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
-import { useSelector } from "react-redux";
 
 export const TweetsHome = () => {
   const { isLoading, data, refetch } = useQuery({
@@ -29,7 +28,7 @@ export const TweetsHome = () => {
       ) : (
         <Box m={10} pb={100}>
           <Flex gap={10} justifyContent={"center"} flexWrap={"wrap"}>
-            {data?.data?.map(({ _id, owner, content, likes, likesList }) => (
+            {data?.data?.map(({ _id, owner, content, likes, isLiked }) => (
               <TweetCard
                 key={_id}
                 owner={owner}
@@ -37,7 +36,7 @@ export const TweetsHome = () => {
                 likes={likes}
                 _id={_id}
                 refetch={refetch}
-                likesList={likesList}
+                isLiked={isLiked}
               />
             ))}
           </Flex>
@@ -47,16 +46,11 @@ export const TweetsHome = () => {
   );
 };
 
-const TweetCard = ({ owner, content, likes, _id, refetch, likesList }) => {
-  const { userData } = useSelector((s) => s.auth);
+const TweetCard = ({ owner, content, likes, _id, refetch, isLiked }) => {
   const { isLoading, mutate } = useMutation({
     mutationKey: "toggleTweetLike",
     mutationFn: likeTweetQuery,
     onSuccess: () => refetch(),
-  });
-
-  const isLiked = likesList?.some((like) => {
-    return like.likedBy === userData?.id;
   });
 
   const onToggleLike = (_id) => mutate(_id);
