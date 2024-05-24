@@ -12,7 +12,8 @@ import {
 import { Loader, ScreenContainer, ScreenTitle } from "../../components";
 import { useMutation, useQuery } from "react-query";
 import { tweetListQuery, likeTweetQuery } from "../../config/userQueries";
-import { IoIosHeart } from "react-icons/io";
+import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 export const TweetsHome = () => {
   const { isLoading, data, refetch } = useQuery({
@@ -28,7 +29,7 @@ export const TweetsHome = () => {
       ) : (
         <Box m={10} pb={100}>
           <Flex gap={10} justifyContent={"center"} flexWrap={"wrap"}>
-            {data?.data?.map(({ _id, owner, content, likes }) => (
+            {data?.data?.map(({ _id, owner, content, likes, likesList }) => (
               <TweetCard
                 key={_id}
                 owner={owner}
@@ -36,6 +37,7 @@ export const TweetsHome = () => {
                 likes={likes}
                 _id={_id}
                 refetch={refetch}
+                likesList={likesList}
               />
             ))}
           </Flex>
@@ -45,11 +47,16 @@ export const TweetsHome = () => {
   );
 };
 
-const TweetCard = ({ owner, content, likes, _id, refetch }) => {
+const TweetCard = ({ owner, content, likes, _id, refetch, likesList }) => {
+  const { userData } = useSelector((s) => s.auth);
   const { isLoading, mutate } = useMutation({
     mutationKey: "toggleTweetLike",
     mutationFn: likeTweetQuery,
     onSuccess: () => refetch(),
+  });
+
+  const isLiked = likesList?.some((like) => {
+    return like.likedBy === userData?.id;
   });
 
   const onToggleLike = (_id) => mutate(_id);
@@ -69,10 +76,16 @@ const TweetCard = ({ owner, content, likes, _id, refetch }) => {
         <Box cursor={"pointer"}>
           {isLoading ? (
             <Spinner size={"sm"} />
-          ) : (
+          ) : isLiked ? (
             <IoIosHeart
               onClick={() => onToggleLike(_id)}
-              color="red"
+              color={"red"}
+              fontSize={18}
+            />
+          ) : (
+            <IoIosHeartEmpty
+              onClick={() => onToggleLike(_id)}
+              color={"black"}
               fontSize={18}
             />
           )}
