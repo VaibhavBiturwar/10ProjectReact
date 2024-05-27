@@ -53,6 +53,17 @@ export const editProfileQuery = async ({ email, username, fullName }) => {
     });
     return data;
   } catch (error) {
+    console.log("🚀 / editProfileQuery / error:", error);
+    throw error.response.data.message;
+  }
+};
+
+export const myTweetQuery = async () => {
+  try {
+    const { data } = await api.get(endpoints.myTweets);
+    return data;
+  } catch (error) {
+    console.log("🚀 / myTweetQuery / error:", error);
     throw error.response.data.message;
   }
 };
