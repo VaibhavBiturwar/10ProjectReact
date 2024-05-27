@@ -43,3 +43,16 @@ export const likeTweetQuery = async (tweetId) => {
     throw error.response.data.message;
   }
 };
+
+export const editProfileQuery = async ({ email, username, fullName }) => {
+  try {
+    const { data } = await api.post(endpoints.editProfile, {
+      email,
+      username,
+      fullName,
+    });
+    return data;
+  } catch (error) {
+    throw error.response.data.message;
+  }
+};

@@ -26,4 +26,6 @@ export const endpoints = {
   //
   allTweets: "tweets/getAllTweets",
   likeTweet: "likes/toggleTweetLike",
+  //
+  editProfile: "users/updateUserDetails",
 };

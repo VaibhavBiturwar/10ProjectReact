@@ -19,6 +19,7 @@ import {
   VideosHome,
   TweetsHome,
   ProfileHome,
+  ProfileEdit,
 } from "./pages";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store.js";
@@ -108,6 +109,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+  // Profile Routes
   {
     path: "/profileHome",
     element: (
@@ -116,6 +118,15 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+  {
+    path: "/profileHome/ProfileEdit",
+    element: (
+      <PrivateRoute>
+        <ProfileEdit />
+      </PrivateRoute>
+    ),
+  },
+  // Profile Routes
 ]);
 const queryClient = new QueryClient();
 

@@ -9,6 +9,7 @@ import VerifySuccess from "./auth/VerifySuccess.jsx";
 import { Dashboard } from "./home/Dashboard.jsx";
 import { TweetsHome } from "./home/TweetsHome.jsx";
 import { VideosHome } from "./home/VideosHome.jsx";
+import { ProfileEdit } from "./profile/ProfileEdit.jsx";
 import { ProfileHome } from "./profile/ProfileHome.jsx";
 
 export {
@@ -26,4 +27,5 @@ export {
   TweetsHome,
   //
   ProfileHome,
+  ProfileEdit,
 };
