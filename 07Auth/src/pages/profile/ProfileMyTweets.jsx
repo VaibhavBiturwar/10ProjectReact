@@ -36,6 +36,7 @@ export const ProfileMyTweets = () => {
                     _id={_id}
                     refetch={refetch}
                     isLiked={isLiked}
+                    isOwner={true}
                   />
                 ))}
               </Flex>

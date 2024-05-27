@@ -1,18 +1,31 @@
 import React from "react";
 import {
   Box,
+  Button,
   Card,
+  Flex,
   HStack,
   Image,
   Spinner,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useMutation } from "react-query";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
-import { likeTweetQuery } from "../config/userQueries.js";
+import { DeleteMyTweetQuery, likeTweetQuery } from "../config/userQueries.js";
+import { FaTrash } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
-export const TweetCard = ({ owner, content, likes, _id, refetch, isLiked }) => {
+export const TweetCard = ({
+  owner,
+  content,
+  likes,
+  _id,
+  refetch,
+  isLiked,
+  isOwner = false,
+}) => {
   const { isLoading, mutate } = useMutation({
     mutationKey: "toggleTweetLike",
     mutationFn: likeTweetQuery,
@@ -52,6 +65,7 @@ export const TweetCard = ({ owner, content, likes, _id, refetch, isLiked }) => {
         </Box>
         <Text>{likes}</Text>
       </HStack>
+      {isOwner && <TweetActions id={_id} refetch={refetch} />}
     </Card>
   );
 };
@@ -73,3 +87,63 @@ const OwnerDetails = ({ owner }) => (
     </Stack>
   </HStack>
 );
+
+const TweetActions = ({ id, refetch }) => {
+  const toast = useToast();
+
+  const { isLoading, mutate } = useMutation({
+    mutationKey: "deleteTweet",
+    mutationFn: DeleteMyTweetQuery,
+    onError: (e) => {
+      toast({
+        description: e,
+        title: "An error occurred!",
+        status: "error",
+        colorScheme: "brand",
+        position: "top-left",
+      });
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast({
+          description: data.message,
+          title: "Success!",
+          status: "success",
+          colorScheme: "brand",
+          position: "top-left",
+        });
+      } else {
+        toast({
+          description: data.message,
+          title: "An error occurred!",
+          status: "error",
+          colorScheme: "brand",
+          position: "top-left",
+        });
+      }
+
+      refetch();
+    },
+  });
+
+  const onDeleteTweet = () => {
+    mutate(id);
+  };
+
+  return (
+    <Flex gap={5} pt={3}>
+      <Button size={"sm"} colorScheme="brand" leftIcon={<MdEdit />}>
+        Edit
+      </Button>
+      <Button
+        size={"sm"}
+        colorScheme="red"
+        leftIcon={<FaTrash />}
+        onClick={onDeleteTweet}
+        isLoading={isLoading}
+      >
+        Delete
+      </Button>
+    </Flex>
+  );
+};

@@ -67,3 +67,13 @@ export const myTweetQuery = async () => {
     throw error.response.data.message;
   }
 };
+
+export const DeleteMyTweetQuery = async (id) => {
+  try {
+    const { data } = await api.post(endpoints.deleteTweet, { id });
+    return data;
+  } catch (error) {
+    console.log("🚀 / DeleteMyTweetQuery / error:", error);
+    throw error.response.data.message;
+  }
+};
