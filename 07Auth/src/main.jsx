@@ -20,6 +20,7 @@ import {
   TweetsHome,
   ProfileHome,
   ProfileEdit,
+  ProfileMyTweets,
 } from "./pages";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store.js";
@@ -123,6 +124,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <ProfileEdit />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profileHome/ProfileMyTweets",
+    element: (
+      <PrivateRoute>
+        <ProfileMyTweets />
       </PrivateRoute>
     ),
   },

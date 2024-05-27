@@ -4,6 +4,7 @@ import { PasswordField } from "./PasswordField.jsx";
 import { ScreenContainer } from "./ScreenContainer.jsx";
 import { ScreenTitle } from "./ScreenTitle.jsx";
 import { Loader } from "./Loader.jsx";
+import { TweetCard } from "./TweetCard.jsx";
 
 export {
   ScreenTitle,
@@ -12,4 +13,5 @@ export {
   PublicRoute,
   PasswordField,
   Loader,
+  TweetCard,
 };

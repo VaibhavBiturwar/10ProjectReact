@@ -11,6 +11,7 @@ import { TweetsHome } from "./home/TweetsHome.jsx";
 import { VideosHome } from "./home/VideosHome.jsx";
 import { ProfileEdit } from "./profile/ProfileEdit.jsx";
 import { ProfileHome } from "./profile/ProfileHome.jsx";
+import { ProfileMyTweets } from "./profile/ProfileMyTweets.jsx";
 
 export {
   ForgotPassword,
@@ -28,4 +29,5 @@ export {
   //
   ProfileHome,
   ProfileEdit,
+  ProfileMyTweets,
 };

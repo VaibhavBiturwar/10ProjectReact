@@ -15,7 +15,7 @@ const OPTIONS = [
   },
   {
     id: 2,
-    path: "",
+    path: "/profileHome/profileMyTweets",
     name: "My Tweets",
   },
   {
