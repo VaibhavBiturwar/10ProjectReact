@@ -20,6 +20,7 @@ api.interceptors.request.use(
 
 export const endpoints = {
   login: "users/login",
+  signup: "users/register",
   //
   allVideos: "videos/getAllVideos",
   //

@@ -1,4 +1,6 @@
 import {
+  Avatar,
+  Box,
   Button,
   Card,
   Center,
@@ -8,18 +10,30 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Image,
   Input,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { PasswordField } from "../../components/PasswordField";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { object, string, ref } from "yup";
+import { useState, useRef, useEffect } from "react";
+import { useMutation } from "react-query";
+import { signupQuery } from "../../config/userQueries";
+
+const MOCK_AVATAR =
+  "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg";
+const MOCK_COVER =
+  "https://cpworldgroup.com/wp-content/uploads/2021/01/placeholder.png";
 
 const signupValidationSchema = object({
-  fName: string().required("First name is required"),
-  lName: string().required("Last name is required"),
+  fullName: string().required("Full name is required"),
+  username: string()
+    .min(6, "Minimum 6 characters required.")
+    .required("Username is required"),
   email: string()
     .email("Valid email is required")
     .required("Email is required"),
@@ -33,6 +47,81 @@ const signupValidationSchema = object({
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const toast = useToast();
+  const [avatar, setAvatar] = useState(null);
+  const avatarRef = useRef(null);
+  const [cover, setCover] = useState(null);
+  const coverRef = useRef(null);
+
+  const onAvatarChange = (event) => setAvatar(event.target.files[0]);
+
+  const onCoverChange = (event) => setCover(event.target.files[0]);
+
+  const { isLoading, mutate } = useMutation({
+    mutationKey: "signup",
+    mutationFn: signupQuery,
+    onError: (e) => {
+      toast({
+        description: e,
+        title: "An error occurred!",
+        status: "error",
+        colorScheme: "red",
+        position: "top-left",
+      });
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast({
+          description: data.message,
+          title: "Success",
+          status: "success",
+          colorScheme: "green",
+          position: "top-left",
+        });
+        navigate("/signin");
+      } else {
+        toast({
+          description: data.message,
+          title: "An error occurred!",
+          status: "error",
+          colorScheme: "red",
+          position: "top-left",
+        });
+      }
+    },
+  });
+
+  const onSubmitValues = (values) => {
+    if (avatar == null) {
+      toast({
+        description: "Error!",
+        title: "Avatar Image is required!",
+        status: "error",
+        colorScheme: "brand",
+        position: "top-left",
+      });
+      return;
+    }
+    if (cover == null) {
+      toast({
+        description: "Error!",
+        title: "Cover Image is required!",
+        status: "error",
+        colorScheme: "brand",
+        position: "top-left",
+      });
+      return;
+    }
+
+    const newFormData = new FormData();
+    newFormData.append("fullName", values.fullName);
+    newFormData.append("email", values.email);
+    newFormData.append("username", values.username);
+    newFormData.append("password", values.password);
+    newFormData.append("avatar", avatar);
+    newFormData.append("coverImage", cover);
+    mutate(newFormData);
+  };
 
   return (
     <Container h="100vh" minW="300px">
@@ -57,70 +146,111 @@ export default function SignUp() {
           <Text textStyle={"mutedText"} mb={10}>
             Create a free account by filling data below.
           </Text>
+
+          <Flex
+            flexDirection={{
+              base: "column",
+              lg: "row",
+            }}
+            gap={6}
+            pb={5}
+            align={"center"}
+          >
+            <Box
+              flex={1}
+              alignItems={"center"}
+              justifyContent={"center"}
+              display={"flex"}
+              flexDirection={"column"}
+              gap={1}
+              onClick={() => avatarRef?.current?.click()}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                onChange={onAvatarChange}
+                ref={avatarRef}
+                style={{
+                  position: "absolute",
+                  display: "none",
+                }}
+              />
+              <Avatar
+                name="avatar"
+                src={avatar ? URL.createObjectURL(avatar) : MOCK_AVATAR}
+                objectFit={"fill"}
+                borderWidth={2}
+                borderColor={"black.500"}
+                width={40}
+                height={40}
+              />
+              <FormLabel>Avatar</FormLabel>
+            </Box>
+
+            <Box
+              flex={1}
+              alignItems={"center"}
+              justifyContent={"center"}
+              display={"flex"}
+              flexDirection={"column"}
+              gap={1}
+              onClick={() => coverRef?.current?.click()}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                onChange={onCoverChange}
+                ref={coverRef}
+                style={{
+                  position: "absolute",
+                  display: "none",
+                }}
+              />
+              <Image
+                src={cover ? URL.createObjectURL(cover) : MOCK_COVER}
+                objectFit={"fill"}
+                borderWidth={2}
+                borderColor={"black.200"}
+                aspectRatio={2 / 1}
+                height={40}
+              />
+              <FormLabel>Cover Image</FormLabel>
+            </Box>
+          </Flex>
+
           <Formik
             initialValues={{
-              fName: "",
-              lName: "",
+              fullName: "",
               email: "",
+              username: "",
               password: "",
               cPassword: "",
             }}
             validationSchema={signupValidationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-              navigate("/verifyEmail", {
-                state: { email: values.email },
-              });
-            }}
+            onSubmit={onSubmitValues}
           >
             {() => (
               <Form>
                 <Stack>
                   <Stack spacing={6}>
-                    <Flex
-                      flexDirection={{
-                        base: "column",
-                        lg: "row",
-                      }}
-                      gap={6}
-                    >
-                      <Field name="fName">
-                        {({ field, meta }) => (
-                          <FormControl
-                            spacing={0}
-                            flex={1}
-                            isInvalid={!!(meta.error && meta.touched)}
-                          >
-                            <FormLabel htmlFor="fName">First Name</FormLabel>
-                            <Input
-                              {...field}
-                              name="fName"
-                              type="text"
-                              placeholder="First Name"
-                            />
-                            <FormErrorMessage>{meta.error}</FormErrorMessage>
-                          </FormControl>
-                        )}
-                      </Field>
-                      <Field name="lName">
-                        {({ field, meta }) => (
-                          <FormControl
-                            spacing={0}
-                            flex={1}
-                            isInvalid={!!(meta.error && meta.touched)}
-                          >
-                            <FormLabel htmlFor="lName">Last Name</FormLabel>
-                            <Input
-                              {...field}
-                              name="lName"
-                              type="text"
-                              placeholder="Last Name"
-                            />
-                            <FormErrorMessage>{meta.error}</FormErrorMessage>
-                          </FormControl>
-                        )}
-                      </Field>
-                    </Flex>
+                    <Field name="fullName">
+                      {({ field, meta }) => (
+                        <FormControl
+                          spacing={0}
+                          flex={1}
+                          isInvalid={!!(meta.error && meta.touched)}
+                        >
+                          <FormLabel htmlFor="fullName">Full Name</FormLabel>
+                          <Input
+                            {...field}
+                            name="fullName"
+                            type="text"
+                            placeholder="Full Name"
+                          />
+                          <FormErrorMessage>{meta.error}</FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
 
                     <Field name="email">
                       {({ field, meta }) => (
@@ -135,6 +265,24 @@ export default function SignUp() {
                             name="email"
                             type="email"
                             placeholder="Email"
+                          />
+                          <FormErrorMessage>{meta.error}</FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
+                    <Field name="username">
+                      {({ field, meta }) => (
+                        <FormControl
+                          spacing={0}
+                          flex={1}
+                          isInvalid={!!(meta.error && meta.touched)}
+                        >
+                          <FormLabel htmlFor="username">Username</FormLabel>
+                          <Input
+                            {...field}
+                            name="username"
+                            type="text"
+                            placeholder="Username"
                           />
                           <FormErrorMessage>{meta.error}</FormErrorMessage>
                         </FormControl>
@@ -187,7 +335,11 @@ export default function SignUp() {
                         Terms & Conditions.
                       </Text>
                     </Checkbox>
-                    <Button colorScheme="brand" type="submit">
+                    <Button
+                      isLoading={isLoading}
+                      colorScheme="brand"
+                      type="submit"
+                    >
                       Create Account
                     </Button>
 

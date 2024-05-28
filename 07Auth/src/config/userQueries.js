@@ -12,6 +12,16 @@ export const loginQuery = async ({ email, password }) => {
   }
 };
 
+export const signupQuery = async (formData) => {
+  try {
+    const { data } = await api.post(endpoints.signup, formData);
+    return data;
+  } catch (error) {
+    console.log("🚀 / signupQuery / error:", error);
+    throw error.response.data.message;
+  }
+};
+
 export const videoListQuery = async () => {
   try {
     const { data } = await api.get(endpoints.allVideos);
