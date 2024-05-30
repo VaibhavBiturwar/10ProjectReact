@@ -11,6 +11,7 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { SideBar } from "./components/SideBar";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +36,7 @@ const editValidationSchema = object({
 export const ProfileEdit = () => {
   const { userData } = useSelector((s) => s.auth);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const { mutate, isLoading } = useMutation({
     mutationKey: "editProfile",

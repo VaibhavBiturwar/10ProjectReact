@@ -25,6 +25,7 @@ export {
   //
   Dashboard,
   VideosHome,
+  //
   TweetsHome,
   //
   ProfileHome,

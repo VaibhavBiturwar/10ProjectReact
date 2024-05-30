@@ -5,6 +5,7 @@ import { ScreenContainer } from "./ScreenContainer.jsx";
 import { ScreenTitle } from "./ScreenTitle.jsx";
 import { Loader } from "./Loader.jsx";
 import { TweetCard } from "./TweetCard.jsx";
+import { NewTweetModal } from "./NewTweetModal.jsx";
 
 export {
   ScreenTitle,
@@ -14,4 +15,5 @@ export {
   PasswordField,
   Loader,
   TweetCard,
+  NewTweetModal,
 };

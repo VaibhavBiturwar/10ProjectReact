@@ -102,6 +102,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+  // Tweets
   {
     path: "/tweetsHome",
     element: (

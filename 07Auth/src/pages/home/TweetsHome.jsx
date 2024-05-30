@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import {
   Loader,
+  NewTweetModal,
   ScreenContainer,
   ScreenTitle,
   TweetCard,
@@ -22,6 +23,9 @@ export const TweetsHome = () => {
         <Loader />
       ) : (
         <Box m={10} pb={100}>
+          <Flex justifyContent={"flex-end"} maxW={"95%"} mb={5}>
+            <NewTweetModal refetch={refetch} />
+          </Flex>
           <Flex gap={10} justifyContent={"center"} flexWrap={"wrap"}>
             {data?.data?.map(({ _id, owner, content, likes, isLiked }) => (
               <TweetCard
