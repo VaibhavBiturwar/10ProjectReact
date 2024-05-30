@@ -6,6 +6,8 @@ import { ScreenTitle } from "./ScreenTitle.jsx";
 import { Loader } from "./Loader.jsx";
 import { TweetCard } from "./TweetCard.jsx";
 import { NewTweetModal } from "./NewTweetModal.jsx";
+import { AvatarSelector } from "./AvatarSelector.jsx";
+import { CoverSelector } from "./CoverSelector.jsx";
 
 export {
   ScreenTitle,
@@ -16,4 +18,6 @@ export {
   Loader,
   TweetCard,
   NewTweetModal,
+  AvatarSelector,
+  CoverSelector,
 };

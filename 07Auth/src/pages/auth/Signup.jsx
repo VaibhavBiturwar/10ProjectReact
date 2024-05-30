@@ -20,14 +20,10 @@ import { PasswordField } from "../../components/PasswordField";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { object, string, ref } from "yup";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "react-query";
 import { signupQuery } from "../../config/userQueries";
-
-const MOCK_AVATAR =
-  "https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg";
-const MOCK_COVER =
-  "https://cpworldgroup.com/wp-content/uploads/2021/01/placeholder.png";
+import { AvatarSelector, CoverSelector } from "../../components";
 
 const signupValidationSchema = object({
   fullName: string().required("Full name is required"),
@@ -49,9 +45,7 @@ export default function SignUp() {
   const navigate = useNavigate();
   const toast = useToast();
   const [avatar, setAvatar] = useState(null);
-  const avatarRef = useRef(null);
   const [cover, setCover] = useState(null);
-  const coverRef = useRef(null);
 
   const onAvatarChange = (event) => setAvatar(event.target.files[0]);
 
@@ -156,66 +150,8 @@ export default function SignUp() {
             pb={5}
             align={"center"}
           >
-            <Box
-              flex={1}
-              alignItems={"center"}
-              justifyContent={"center"}
-              display={"flex"}
-              flexDirection={"column"}
-              gap={1}
-              onClick={() => avatarRef?.current?.click()}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                onChange={onAvatarChange}
-                ref={avatarRef}
-                style={{
-                  position: "absolute",
-                  display: "none",
-                }}
-              />
-              <Avatar
-                name="avatar"
-                src={avatar ? URL.createObjectURL(avatar) : MOCK_AVATAR}
-                objectFit={"fill"}
-                borderWidth={2}
-                borderColor={"black.500"}
-                width={40}
-                height={40}
-              />
-              <FormLabel>Avatar</FormLabel>
-            </Box>
-
-            <Box
-              flex={1}
-              alignItems={"center"}
-              justifyContent={"center"}
-              display={"flex"}
-              flexDirection={"column"}
-              gap={1}
-              onClick={() => coverRef?.current?.click()}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                onChange={onCoverChange}
-                ref={coverRef}
-                style={{
-                  position: "absolute",
-                  display: "none",
-                }}
-              />
-              <Image
-                src={cover ? URL.createObjectURL(cover) : MOCK_COVER}
-                objectFit={"fill"}
-                borderWidth={2}
-                borderColor={"black.200"}
-                aspectRatio={2 / 1}
-                height={40}
-              />
-              <FormLabel>Cover Image</FormLabel>
-            </Box>
+            <AvatarSelector avatar={avatar} onAvatarChange={onAvatarChange} />
+            <CoverSelector cover={cover} onCoverChange={onCoverChange} />
           </Flex>
 
           <Formik

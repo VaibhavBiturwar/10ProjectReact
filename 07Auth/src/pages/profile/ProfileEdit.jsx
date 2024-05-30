@@ -157,15 +157,13 @@ export const ProfileEdit = () => {
                       )}
                     </Field>
 
-                    <FormControl>
-                      <Button
-                        isLoading={isLoading}
-                        colorScheme="brand"
-                        type="submit"
-                      >
-                        Update Details
-                      </Button>
-                    </FormControl>
+                    <Button
+                      isLoading={isLoading}
+                      colorScheme="brand"
+                      type="submit"
+                    >
+                      Update Details
+                    </Button>
                   </Stack>
                 </Form>
               )}
