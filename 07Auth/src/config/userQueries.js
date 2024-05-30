@@ -97,3 +97,12 @@ export const createTweetQuery = async (data) => {
     throw error.response.data.message;
   }
 };
+export const updateTweetQuery = async (data) => {
+  try {
+    const { data: response } = await api.patch(endpoints.updateTweet, data);
+    return response;
+  } catch (error) {
+    console.log("🚀 / updateTweetQuery / error:", error);
+    throw error.response.data.message;
+  }
+};

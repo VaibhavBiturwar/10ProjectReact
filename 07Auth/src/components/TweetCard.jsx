@@ -16,6 +16,7 @@ import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 import { DeleteMyTweetQuery, likeTweetQuery } from "../config/userQueries.js";
 import { FaTrash } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import { NewTweetModal } from "./NewTweetModal.jsx";
 
 export const TweetCard = ({
   owner,
@@ -65,7 +66,7 @@ export const TweetCard = ({
         </Box>
         <Text>{likes}</Text>
       </HStack>
-      {isOwner && <TweetActions id={_id} refetch={refetch} />}
+      {isOwner && <TweetActions id={_id} refetch={refetch} content={content} />}
     </Card>
   );
 };
@@ -88,10 +89,10 @@ const OwnerDetails = ({ owner }) => (
   </HStack>
 );
 
-const TweetActions = ({ id, refetch }) => {
+const TweetActions = ({ id, refetch, content }) => {
   const toast = useToast();
 
-  const { isLoading, mutate } = useMutation({
+  const { isLoading: isLoadingDelete, mutate: mutateDelete } = useMutation({
     mutationKey: "deleteTweet",
     mutationFn: DeleteMyTweetQuery,
     onError: (e) => {
@@ -126,21 +127,15 @@ const TweetActions = ({ id, refetch }) => {
     },
   });
 
-  const onDeleteTweet = () => {
-    mutate(id);
-  };
-
   return (
     <Flex gap={5} pt={3}>
-      <Button size={"sm"} colorScheme="brand" leftIcon={<MdEdit />}>
-        Edit
-      </Button>
+      <NewTweetModal isEdit content={content} id={id} refetch={refetch} />
       <Button
         size={"sm"}
         colorScheme="red"
         leftIcon={<FaTrash />}
-        onClick={onDeleteTweet}
-        isLoading={isLoading}
+        onClick={() => mutateDelete(id)}
+        isLoading={isLoadingDelete}
       >
         Delete
       </Button>

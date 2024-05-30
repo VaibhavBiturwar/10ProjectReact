@@ -29,6 +29,7 @@ export const endpoints = {
   deleteTweet: "tweets/deleteTweet",
   myTweets: "tweets/getUserTweets",
   createTweet: "tweets/createTweet",
+  updateTweet: "tweets/updateTweet",
   //
   editProfile: "users/updateUserDetails",
 };

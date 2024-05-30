@@ -17,7 +17,8 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { useMutation } from "react-query";
 import { object, string } from "yup";
-import { createTweetQuery } from "../config/userQueries";
+import { createTweetQuery, updateTweetQuery } from "../config/userQueries";
+import { MdEdit } from "react-icons/md";
 
 const tweetValidationSchema = object({
   content: string()
@@ -25,13 +26,47 @@ const tweetValidationSchema = object({
     .required("Content is required"),
 });
 
-export const NewTweetModal = ({ refetch }) => {
+export const NewTweetModal = ({ refetch, isEdit = false, content, id }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const { isLoading, mutate } = useMutation({
+  const { isLoading: isLoadingCreate, mutate: mutateCreate } = useMutation({
     mutationKey: "createTweet",
     mutationFn: createTweetQuery,
+    onError: (e) => {
+      toast({
+        description: e,
+        title: "An error occurred!",
+        status: "error",
+        colorScheme: "brand",
+        position: "top-left",
+      });
+    },
+    onSuccess: (data) => {
+      onClose();
+      if (data.success) {
+        refetch();
+        toast({
+          description: data.message,
+          title: "Success!",
+          status: "success",
+          colorScheme: "brand",
+          position: "top-left",
+        });
+      } else {
+        toast({
+          description: data.message,
+          title: "An error occurred!",
+          status: "error",
+          colorScheme: "brand",
+          position: "top-left",
+        });
+      }
+    },
+  });
+  const { isLoading: isLoadingEdit, mutate: mutateEdit } = useMutation({
+    mutationKey: "createTweet",
+    mutationFn: updateTweetQuery,
     onError: (e) => {
       toast({
         description: e,
@@ -66,20 +101,38 @@ export const NewTweetModal = ({ refetch }) => {
 
   return (
     <>
-      <Button variant={"outline"} colorScheme="brand" onClick={onOpen}>
-        Create New
-      </Button>
+      {isEdit ? (
+        <Button
+          size={"sm"}
+          colorScheme="brand"
+          leftIcon={<MdEdit />}
+          onClick={onOpen}
+        >
+          Edit
+        </Button>
+      ) : (
+        <Button variant={"outline"} colorScheme="brand" onClick={onOpen}>
+          Create New
+        </Button>
+      )}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Post New Tweet</ModalHeader>
+          <ModalHeader>{isEdit ? "Edit Tweet" : "Post New Tweet"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Formik
-              initialValues={{ content: "This is a demo content" }}
+              initialValues={{ content: isEdit ? content : "" }}
               validationSchema={tweetValidationSchema}
-              onSubmit={(val) => mutate(val)}
+              onSubmit={(val) =>
+                isEdit
+                  ? mutateEdit({
+                      content: val.content,
+                      id: id,
+                    })
+                  : mutateCreate(val)
+              }
             >
               {() => (
                 <Form>
@@ -88,6 +141,8 @@ export const NewTweetModal = ({ refetch }) => {
                       <FormControl isInvalid={!!(meta.error && meta.touched)}>
                         <FormLabel htmlFor="content">Content</FormLabel>
                         <Textarea
+                          size={"md"}
+                          minH={"12rem"}
                           {...field}
                           name="content"
                           placeholder="What do you want to write..."
@@ -98,13 +153,13 @@ export const NewTweetModal = ({ refetch }) => {
                   </Field>
                   <FormControl>
                     <Button
-                      isLoading={isLoading}
+                      isLoading={isLoadingEdit || isLoadingCreate}
                       colorScheme="brand"
                       type="submit"
                       ml={1}
                       mt={2}
                     >
-                      Save
+                      {isEdit ? "Update Tweet" : "Save"}
                     </Button>
                   </FormControl>
                 </Form>
