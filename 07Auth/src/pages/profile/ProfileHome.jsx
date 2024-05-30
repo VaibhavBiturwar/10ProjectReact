@@ -3,14 +3,19 @@ import { ScreenContainer, ScreenTitle } from "../../components";
 import {
   Box,
   Card,
+  CardBody,
   Flex,
+  HStack,
   Image,
-  SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { SideBar } from "./components/SideBar";
 import { useSelector } from "react-redux";
+import { FaRegUser } from "react-icons/fa";
+
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import { CiText } from "react-icons/ci";
 
 export const ProfileHome = () => {
   const { userData } = useSelector((s) => s.auth);
@@ -22,15 +27,21 @@ export const ProfileHome = () => {
         <SideBar />
         <Box width={"100%"} p={10}>
           <Card boxShadow={"xl"} mx={"auto"} maxW={"50%"} flexGrow={0}>
-            <Stack position={"relative"} alignItems={"center"} mb={50}>
+            <Stack position={"relative"} alignItems={"center"}>
               <Image
                 src={userData.coverImage}
-                aspectRatio={3 / 1}
+                aspectRatio={10 / 2.5}
+                width={"100%"}
                 objectFit={"cover"}
               />
               <Image
                 position={"absolute"}
-                bottom={"-1em"}
+                bottom={{
+                  base: "-1rem",
+                  md: "-2rem",
+                  lg: "-3rem",
+                  xl: "-4rem",
+                }}
                 boxShadow={"dark-lg"}
                 src={userData.avatar}
                 maxWidth={"20%"}
@@ -39,20 +50,21 @@ export const ProfileHome = () => {
                 borderRadius={"full"}
               />
             </Stack>
-            <SimpleGrid
-              mx={"auto"}
-              p={4}
-              alignItems={"baseline"}
-              columns={2}
-              spacing={1}
-            >
-              <Text align={"end"}>Full Name :</Text>
-              <Text textStyle={"subTitle"}>{userData.fullName}</Text>
-              <Text align={"end"}>Email :</Text>
-              <Text textStyle={"subTitle"}>{userData.email}</Text>
-              <Text align={"end"}>Username :</Text>
-              <Text textStyle={"subTitle"}>{userData.username}</Text>
-            </SimpleGrid>
+
+            <CardBody mx={"auto"} pt={50} mt={10}>
+              <HStack>
+                <FaRegUser fontSize={20} />
+                <Text textStyle={"subTitle"}>{userData.fullName}</Text>
+              </HStack>
+              <HStack>
+                <MdOutlineAlternateEmail fontSize={20} />
+                <Text textStyle={"subTitle"}>{userData.email}</Text>
+              </HStack>
+              <HStack>
+                <CiText fontSize={20} />
+                <Text textStyle={"subTitle"}>{userData.username}</Text>
+              </HStack>
+            </CardBody>
           </Card>
         </Box>
       </Flex>
