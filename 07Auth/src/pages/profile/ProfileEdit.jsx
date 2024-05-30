@@ -15,16 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { SideBar } from "./components/SideBar";
 import { useDispatch, useSelector } from "react-redux";
-import { Field, Formik } from "formik";
-import { Form } from "react-router-dom";
+import { Field, Formik, Form } from "formik";
 import { object, string } from "yup";
 import { useMutation } from "react-query";
 import { editProfileQuery } from "../../config/userQueries";
-import { setUserData } from "../../store/slice/authSlice";
+import { updateUserData } from "../../store/slice/authSlice";
 
 const editValidationSchema = object({
   fullName: string().required("Full name is required"),
-
   email: string()
     .email("Valid email is required")
     .required("Email is required"),
@@ -52,7 +50,7 @@ export const ProfileEdit = () => {
     },
     onSuccess: (data) => {
       if (data.success) {
-        dispatch(setUserData(data.data));
+        dispatch(updateUserData(data.data));
         toast({
           description: data.message,
           title: "Success!",
@@ -97,10 +95,7 @@ export const ProfileEdit = () => {
                 username: userData.username,
               }}
               validationSchema={editValidationSchema}
-              onSubmit={(values) => {
-                console.log("values");
-                mutate(values);
-              }}
+              onSubmit={(values) => mutate(values)}
             >
               {() => (
                 <Form>
@@ -162,13 +157,15 @@ export const ProfileEdit = () => {
                       )}
                     </Field>
 
-                    <Button
-                      isLoading={isLoading}
-                      colorScheme="brand"
-                      type="reset"
-                    >
-                      Update Details
-                    </Button>
+                    <FormControl>
+                      <Button
+                        isLoading={isLoading}
+                        colorScheme="brand"
+                        type="submit"
+                      >
+                        Update Details
+                      </Button>
+                    </FormControl>
                   </Stack>
                 </Form>
               )}

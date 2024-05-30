@@ -32,7 +32,7 @@ export const ProfileHome = () => {
                 position={"absolute"}
                 bottom={"-1em"}
                 boxShadow={"dark-lg"}
-                src={userData.avatarUrl}
+                src={userData.avatar}
                 maxWidth={"20%"}
                 aspectRatio={1}
                 objectFit={"cover"}

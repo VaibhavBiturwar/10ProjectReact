@@ -84,7 +84,7 @@ const ProfileIcon = () => {
     <Menu>
       <MenuButton>
         <Image
-          src={userData.avatarUrl}
+          src={userData.avatar}
           height={10}
           width={10}
           borderRadius={"full"}
