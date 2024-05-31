@@ -55,3 +55,13 @@ export const updateCoverImageQuery = async (data) => {
     throw error.response.data.message;
   }
 };
+
+export const changePasswordQuery = async (data) => {
+  try {
+    const { data: response } = await api.post(endpoints.changePassword, data);
+    return response;
+  } catch (error) {
+    console.log("🚀 / changePasswordQuery / error:", error);
+    throw error.response.data.message;
+  }
+};

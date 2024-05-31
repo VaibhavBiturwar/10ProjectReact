@@ -34,4 +34,5 @@ export const endpoints = {
   editProfile: "users/updateUserDetails",
   updateAvatar: "users/updateAvatar",
   updateCoverImage: "users/updateCoverImage",
+  changePassword: "users/changePassword",
 };

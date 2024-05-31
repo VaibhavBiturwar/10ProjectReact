@@ -21,6 +21,7 @@ import {
   ProfileHome,
   ProfileEdit,
   ProfileMyTweets,
+  ProfileChangePassword,
 } from "./pages";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store.js";
@@ -121,7 +122,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/profileHome/ProfileEdit",
+    path: "/profileHome/profileEdit",
     element: (
       <PrivateRoute>
         <ProfileEdit />
@@ -129,10 +130,18 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/profileHome/ProfileMyTweets",
+    path: "/profileHome/profileMyTweets",
     element: (
       <PrivateRoute>
         <ProfileMyTweets />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profileHome/profileChangePassword",
+    element: (
+      <PrivateRoute>
+        <ProfileChangePassword />
       </PrivateRoute>
     ),
   },

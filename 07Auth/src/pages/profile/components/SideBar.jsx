@@ -30,6 +30,11 @@ const OPTIONS = [
   },
   {
     id: 5,
+    path: "/profileHome/profileChangePassword",
+    name: "Change Password",
+  },
+  {
+    id: 6,
     path: "",
     name: "Delete Account",
   },
