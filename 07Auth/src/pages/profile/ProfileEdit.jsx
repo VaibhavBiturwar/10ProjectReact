@@ -1,5 +1,10 @@
-import React from "react";
-import { ScreenContainer, ScreenTitle } from "../../components";
+import React, { useState } from "react";
+import {
+  AvatarSelector,
+  CoverSelector,
+  ScreenContainer,
+  ScreenTitle,
+} from "../../components";
 import {
   Box,
   Button,
@@ -36,6 +41,13 @@ export const ProfileEdit = () => {
   const dispatch = useDispatch();
   const toast = useToast();
 
+  const [avatar, setAvatar] = useState(userData.avatar);
+  const [cover, setCover] = useState(userData.coverImage);
+
+  const onAvatarChange = (event) =>
+    event.target.files && setAvatar(event.target.files[0]);
+  const onCoverChange = (event) => setCover(event.target.files[0]);
+
   const { mutate, isLoading } = useMutation({
     mutationKey: "editProfile",
     mutationFn: editProfileQuery,
@@ -70,6 +82,13 @@ export const ProfileEdit = () => {
     },
   });
 
+  React.useEffect(() => {
+    setAvatar(userData.avatar);
+  }, [userData.avatar]);
+  React.useEffect(() => {
+    setCover(userData.coverImage);
+  }, [userData.coverImage]);
+
   return (
     <ScreenContainer>
       <ScreenTitle title={"Profile"} />
@@ -88,6 +107,28 @@ export const ProfileEdit = () => {
             <Text textStyle={"title"} textAlign={"center"} mb={2}>
               Edit Profile
             </Text>
+
+            <Flex
+              flexDirection={{
+                base: "column",
+                lg: "row",
+              }}
+              gap={6}
+              pb={5}
+              align={"center"}
+            >
+              <AvatarSelector
+                isEdit
+                avatar={avatar}
+                onAvatarChange={onAvatarChange}
+              />
+              <CoverSelector
+                isEdit
+                cover={cover}
+                onCoverChange={onCoverChange}
+              />
+            </Flex>
+
             <Formik
               initialValues={{
                 fullName: userData.fullName,

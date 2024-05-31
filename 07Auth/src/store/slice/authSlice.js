@@ -25,6 +25,15 @@ export const authSlice = createSlice({
       state.userData.email = payload.email;
       state.userData.fullName = payload.fullName;
     },
+
+    updateAvatar: (state, { payload }) => {
+      state.userData.avatar = payload.data.avatar;
+    },
+
+    updateCoverImage: (state, { payload }) => {
+      state.userData.coverImage = payload.data.coverImage;
+    },
+
     setLogoutUser: (state) => {
       state.userData = null;
       state.authToken = null;
@@ -33,6 +42,12 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setIsLoggedIn, setUserData, setLogoutUser, updateUserData } =
-  authSlice.actions;
+export const {
+  setIsLoggedIn,
+  setUserData,
+  setLogoutUser,
+  updateUserData,
+  updateAvatar,
+  updateCoverImage,
+} = authSlice.actions;
 export default authSlice.reducer;

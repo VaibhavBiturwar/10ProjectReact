@@ -106,3 +106,23 @@ export const updateTweetQuery = async (data) => {
     throw error.response.data.message;
   }
 };
+
+export const updateAvatarQuery = async (data) => {
+  try {
+    const { data: response } = await api.post(endpoints.updateAvatar, data);
+    return response;
+  } catch (error) {
+    console.log("🚀 / updateTweetQuery / error:", error);
+    throw error.response.data.message;
+  }
+};
+
+export const updateCoverImageQuery = async (data) => {
+  try {
+    const { data: response } = await api.post(endpoints.updateCoverImage, data);
+    return response;
+  } catch (error) {
+    console.log("🚀 / updateCoverImageQuery / error:", error);
+    throw error.response.data.message;
+  }
+};

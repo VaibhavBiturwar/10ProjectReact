@@ -32,4 +32,6 @@ export const endpoints = {
   updateTweet: "tweets/updateTweet",
   //
   editProfile: "users/updateUserDetails",
+  updateAvatar: "users/updateAvatar",
+  updateCoverImage: "users/updateCoverImage",
 };
