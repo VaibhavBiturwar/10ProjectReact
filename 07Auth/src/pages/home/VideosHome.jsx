@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import { videoListQuery } from "../../config/userQueries";
+import { videoListQuery } from "../../config/videoQueries.js";
 
 export const VideosHome = () => {
   const { isLoading, data } = useQuery({

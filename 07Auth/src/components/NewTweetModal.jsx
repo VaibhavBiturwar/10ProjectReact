@@ -17,7 +17,7 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { useMutation } from "react-query";
 import { object, string } from "yup";
-import { createTweetQuery, updateTweetQuery } from "../config/userQueries";
+import { createTweetQuery, updateTweetQuery } from "../config/tweetQueries.js";
 import { MdEdit } from "react-icons/md";
 
 const tweetValidationSchema = object({

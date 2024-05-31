@@ -8,7 +8,7 @@ import {
 import { Box, Flex } from "@chakra-ui/react";
 import { SideBar } from "./components/SideBar";
 import { useQuery } from "react-query";
-import { myTweetQuery } from "../../config/userQueries";
+import { myTweetQuery } from "../../config/tweetQueries.js";
 
 export const ProfileMyTweets = () => {
   const { isLoading, data, refetch } = useQuery({

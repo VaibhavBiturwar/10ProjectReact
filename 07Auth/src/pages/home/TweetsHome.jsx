@@ -8,7 +8,7 @@ import {
   TweetCard,
 } from "../../components";
 import { useQuery } from "react-query";
-import { tweetListQuery } from "../../config/userQueries";
+import { tweetListQuery } from "../../config/tweetQueries";
 
 export const TweetsHome = () => {
   const { isLoading, data, refetch } = useQuery({

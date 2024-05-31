@@ -13,9 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "react-query";
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
-import { DeleteMyTweetQuery, likeTweetQuery } from "../config/userQueries.js";
+import { DeleteMyTweetQuery, likeTweetQuery } from "../config/tweetQueries.js";
 import { FaTrash } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
 import { NewTweetModal } from "./NewTweetModal.jsx";
 
 export const TweetCard = ({
